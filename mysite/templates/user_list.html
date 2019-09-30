@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+
+  <form method="get">
+    {{ filter.form.as_table}}
+    <button type="submit">
+      Search
+    </button>  
+  </form>
+ 
+
+
+  <table class="table mb-0">
+    <thead>
+      <tr>
+        <th>Cover</th>
+        <th>Title</th>
+        <th>category </th>
+        <th>Date</th>
+        <th>Description</th>
+        <th>Download</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in filter.qs %}
+        <tr>
+          <td>
+            {% if user.thumbnail %}
+              <img src="{{ user.thumbnail.url }}" alt="{{ book.title }}" style="width:100px;">
+            {% else %}
+              <span class="text-muted">No cover</span>
+            {% endif %}
+          </td>
+          <td>{{ user.title }}</td>
+          <td>{{ user.category }}</td>
+          <td>{{ user.date_added }}</td>
+          <td>{{ user.description }}</td>
+          <td>
+            <a href="{{ user.video.url }}" class="btn btn-primary btn-sm" target="_blank">
+              Download Video
+            </a>
+          </td>
+          <td>
+         </tr>
+      {% endfor %}
+    </tbody>
+  </table>   
+{% endblock %}
+

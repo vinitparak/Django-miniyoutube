@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  {% block content_header %}
+    <h2>Video</h2>
+    <p>
+      <a href="{% url 'upload' %}" class="btn btn-primary">Upload video</a>
+    </p>
+  {% endblock %}
+
+  <table class="table mb-0">
+    <thead>
+      <tr>
+        <th>Cover</th>
+        <th>Title</th>
+        <th>category </th>
+        <th>Date</th>
+        <th>Download</th>
+        <th>Delete</th>
+        <th>Edit Post</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for book in books %}
+        <tr>
+          <td>
+            {% if book.thumbnail %}
+              <img src="{{ book.thumbnail.url }}" alt="{{ book.title }}" style="width:100px;">
+            {% else %}
+              <span class="text-muted">No cover</span>
+            {% endif %}
+          </td>
+          <td>{{ book.title }}</td>
+          <td>{{ book.category }}</td>
+          <td>{{ book.date_added }}</td>
+          <td>
+            <a href="{{ book.video.url }}" class="btn btn-primary btn-sm" target="_blank">
+              Download Video
+            </a>
+          </td>
+          <td>
+            <form method="post" action="{% url 'delete_book' book.pk %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+            </form>
+          </td>
+          <td>
+            <a href="{% url 'edit_post' book.pk %}">
+              <button type="submit" class="btn btn-danger btn-sm">Edit</button>
+            </a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
